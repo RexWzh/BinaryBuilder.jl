@@ -1,0 +1,6 @@
+*.jl.cov
+*.jl.*.cov
+*.jl.mem
+global_prefix
+.vscode/
+.ipynb_checkpoints/
