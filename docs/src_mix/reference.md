@@ -1,11 +1,9 @@
 
 # API reference
-
 # API 参考
 
 
 ## Types
-
 ## 类型
 
 ```@autodocs
@@ -15,8 +13,7 @@ Order = [:type]
 
 
 ## Functions
-
-＃＃ 职能
+## 函数
 
 ```@autodocs
 Modules = [BinaryBuilderBase, BinaryBuilder, BinaryBuilder.Auditor, BinaryBuilder.Wizard]
@@ -27,33 +24,22 @@ Filter = x -> !(isa(x, Function) && x === build_tarballs)
 
 
 ## Command Line
-
-＃＃ 命令行
+## 命令行
 
 ```@docs
 build_tarballs
 ```
 
 
-The [`build_tarballs`](@ref) function also parses command line arguments. The syntax is
+The [`build_tarballs`](@ref) function also parses command line arguments. The syntax is described in the `--help` output:
 
-[`build_tarballs`](@ref) 函数还解析命令行参数。语法是
-
-
-described in the `--help` output:
-
-`--help` 输出中描述：
+[`build_tarballs`](@ref) 函数还解析命令行参数。语法在 `--help` 输出中描述：
 
 ````@eval
 using BinaryBuilder, Markdown
 Markdown.parse("""
 ```
-
-
 $(BinaryBuilder.BUILD_HELP)
-
-$(BinaryBuilder.BUILD_HELP)
-
 ```
 """)
 ```

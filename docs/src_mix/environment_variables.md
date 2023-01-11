@@ -1,7 +1,6 @@
 
 # Environment Variables
-
-＃ 环境变量
+# 环境变量
 
 
 `BinaryBuilder.jl` supports multiple environment variables to modify its behavior globally:
@@ -16,12 +15,12 @@
 
 * `BINARYBUILDER_USE_SQUASHFS`: when set to `true`, this uses `.squashfs` images instead of tarballs to download cross-compiler shards.  This consumes significantly less space on-disk and boasts a modest reduction in download size as well, but requires `sudo` on the local machine to mount the `.squashfs` images.  This is the default when using the "privileged" runner.
 
-`BINARYBUILDER_USE_SQUASHFS`：当设置为 `true` 时，这将使用 `.squashfs` 图像而不是 tarball 来下载交叉编译器碎片。这占用的磁盘空间明显减少，下载大小也略有减少，但需要在本地机器上使用 sudo 来挂载 .squashfs 图像。这是使用“特权”运行程序时的默认设置。
+`BINARYBUILDER_USE_SQUASHFS`：当设置为 `true` 时，这将使用 `.squashfs` 图像而不是压缩包来下载交叉编译器碎片。这占用的磁盘空间明显减少，下载大小也略有减少，但需要在本地机器上使用 sudo 来挂载 `.squashfs` 图像。这是使用“特权”运行程序时的默认设置。
 
 
 * `BINARYBUILDER_RUNNER`: When set to a runner string, alters the execution engine that `BinaryBuilder.jl` will use to wrap the build process in a sandbox.  Valid values are one of `"userns"`, `"privileged"` and `"docker"`.  If not given, `BinaryBuilder.jl` will do its best to guess.
 
-* `BINARYBUILDER_RUNNER`：设置为运行器字符串时，会更改 `BinaryBuilder.jl` 将用于将构建过程包装在沙箱中的执行引擎。有效值为“userns”、“privileged”和“docker”之一。如果没有给出，`BinaryBuilder.jl` 将尽力猜测。
+* `BINARYBUILDER_RUNNER`：设置为运行器字符串时，会更改 `BinaryBuilder.jl` 将用于将构建过程包装在沙箱中的执行引擎。有效值为 `"userns"`、`"privileged"` 和 `"docker"` 中的一个。如果未给出，`BinaryBuilder.jl` 将尽力猜测。
 
 
 * `BINARYBUILDER_ALLOW_ECRYPTFS`: When set to `true`, this allows the mounting of rootfs/shard/workspace directories from within encrypted mounts.  This is disabled by default, as at the time of writing, this triggers kernel bugs.  To avoid these kernel bugs on a system where e.g. the home directory has been encrypted, set the `BINARYBUILDER_ROOTFS_DIR` and `BINARYBUILDER_SHARDS_DIR` environment variables to a path outside of the encrypted home directory.
