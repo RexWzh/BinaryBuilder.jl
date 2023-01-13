@@ -1,0 +1,3 @@
+module BinaryBuilder
+
+end # module

@@ -1,0 +1,8 @@
+name = "BinaryBuilder"
+uuid = "12aac903-9f7c-5d81-afc2-d9565ea332ae"
+authors = ["Elliot Saba <staticfloat@gmail.com>"]
+version = "0.5.6"
+
+[compat]
+julia = "1.7"
+
