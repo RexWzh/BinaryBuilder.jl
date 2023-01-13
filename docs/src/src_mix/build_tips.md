@@ -1,6 +1,6 @@
 
 # Tips for Building Packages
-# 构建包的技巧
+# 包的构建技巧
 
 BinaryBuilder provides a convenient environment to enable cross-platform building. But, many libraries have complicated build scripts that may need to be adapted to support all of the BinaryBuilder targets.
 

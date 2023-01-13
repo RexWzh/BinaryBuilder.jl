@@ -1,12 +1,12 @@
 
 # RootFS
 
-#根文件系统
+# 根文件系统
 
 
 The execution environment that all `BinaryBuilder.jl` builds are executed within is referred to as the "root filesystem" or _RootFS_.  This RootFS is built using the builder scripts contained within the [`0_Rootfs` directory](https://github.com/JuliaPackaging/Yggdrasil/tree/master/0_RootFS) within Yggdrasil.  The rootfs image is based upon the `alpine` docker image, and is used to build compilers for every target platform we support.  The target platform compiler toolchains are stored within `/opt/${triplet}`, so the 64-bit Linux (using `glibc` as the backing `libc`) compilers would be found in `/opt/x86_64-linux-gnu/bin`.
 
-所有“BinaryBuilder.jl”构建在其中执行的执行环境称为“根文件系统”或 _RootFS_。此 RootFS 是使用 Yggdrasil 中 [`0_Rootfs` 目录](https://github.com/JuliaPackaging/Yggdrasil/tree/master/0_RootFS) 中包含的构建器脚本构建的。 rootfs 镜像基于 `alpine` docker 镜像，用于为我们支持的每个目标平台构建编译器。目标平台编译器工具链存储在“/opt/${triplet}”中，因此 64 位 Linux（使用“glibc”作为支持“libc”）编译器将在“/opt/x86_64-linux-gnu”中找到/斌`。
+所有 `BinaryBuilder.jl` 构建在其中执行的执行环境称为“根文件系统”或 _RootFS_。此 RootFS 是使用 Yggdrasil 中 [`0_Rootfs` 目录](https://github.com/JuliaPackaging/Yggdrasil/tree/master/0_RootFS) 中包含的构建器脚本构建的。 rootfs 镜像基于 `alpine` docker 镜像，用于为我们支持的每个目标平台构建编译器。目标平台编译器工具链存储在“/opt/${triplet}”中，因此 64 位 Linux（使用“glibc”作为支持“libc”）编译器将在“/opt/x86_64-linux-gnu”中找到/斌`。
 
 
 Each compiler "shard" is packaged separately, so that users do not have to download a multi-GB tarball just to build for a single platform.  There is an overall "root" shard, along with platform support shards, GCC shards, an LLVM shard, Rust shards, etc... These are all embedded within the bundled [`Artifacts.toml` file](https://github.com/JuliaPackaging/BinaryBuilder.jl/blob/master/Artifacts.toml), and `BinaryBuilder.jl` downloads them on-demand as necessary, making use of the new [Pkg.Artifacts system](https://julialang.github.io/Pkg.jl/dev/artifacts/) within Julia 1.3+.

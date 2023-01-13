@@ -1,12 +1,10 @@
 
 # Tricksy Gotchas
-
 # 棘手的问题
-
 
 There are a plethora of gotchas when it comes to binary compilation and distribution that must be appropriately addressed, or the binaries will only work on certain machines and not others.  Here is an incomplete list of things that `BinaryBuilder.jl` takes care of for you:
 
-在必须适当解决的二进制编译和分发方面存在大量问题，否则二进制文件只能在某些机器上运行，而不能在其他机器上运行。以下是 `BinaryBuilder.jl` 为您处理的事情的不完整列表：
+在遇到二进制编译和分发方面时，存在大量问题需进行适当处理，否则二进制文件只能在某些机器上运行，而不能在其他机器上运行。以下是 `BinaryBuilder.jl` 为您处理的事情的不完整列表：
 
 
 * Uniform compiler interface
@@ -21,12 +19,12 @@ No need to worry about invoking compilers through weird names; just run `gcc` wi
 
 * `glibc` versioning
 
-*`glibc`版本控制
+* `glibc` 版本控制
 
 
 On Linux platforms that use `glibc` as the C runtime library (at the time of writing, this is the great majority of most desktop and server distros), it is necessary to compile code against a version of `glibc` that is _older_ than any glibc version it will be run on.  E.g. if your code is compiled against `glibc v2.5`, it will run on `glibc v2.6`, but it will not run on `glibc v2.4`.  Therefore, to maximize compatibility, all code should be compiled against as old a version of `glibc` as possible.
 
-在使用 `glibc` 作为 C 运行时库的 Linux 平台上（在撰写本文时，这是大多数桌面和服务器发行版的绝大多数），有必要针对 _旧_ 的 `glibc` 版本编译代码它将运行的任何 glibc 版本。例如，如果您的代码是针对“glibc v2.5”编译的，它将在“glibc v2.6”上运行，但不会在“glibc v2.4”上运行。因此，为了最大限度地提高兼容性，所有代码都应尽可能针对旧版本的 `glibc` 进行编译。
+在使用 `glibc` 作为 C 运行库的 Linux 平台上（在撰写本文时，这是绝大多数桌面和服务器发行版的情况），有必要针对比起将要运行的 `glibc` 版本更 _旧_ 的版本编译代码。例如，如果您的代码是针对 `glibc v2.5` 编译的，它将在 `glibc v2.6` 上运行，但不会在 `glibc v2.4` 上运行。因此，为了最大限度地提高兼容性，所有代码都应尽可能针对旧版本的 `glibc` 进行编译。
 
 
 * `gfortran` versioning
@@ -36,7 +34,7 @@ On Linux platforms that use `glibc` as the C runtime library (at the time of wri
 
 When compiling FORTRAN code, the `gfortran` compiler has broken ABI compatibility in the 6.X -> 7.X transition, and the 7.X -> 8.X transition.  This means that code built with `gfortran` 6.X cannot be linked against code built with `gfortran` 7.X.  We therefore compile all `gfortran` code against multiple different `gfortran` versions, then at runtime decide which to download based upon the currently running process' existing linkage.
 
-编译 FORTRAN 代码时，`gfortran` 编译器破坏了 6.X -> 7.X 转换和 7.X -> 8.X 转换中的 ABI 兼容性。这意味着使用 `gfortran` 6.X 构建的代码不能与使用 `gfortran` 7.X 构建的代码链接。因此，我们针对多个不同的“gfortran”版本编译所有“gfortran”代码，然后在运行时根据当前运行进程的现有链接决定下载哪个。
+编译 FORTRAN 代码时，`gfortran` 编译器破坏了 6.X -> 7.X 转换和 7.X -> 8.X 转换中的 ABI 兼容性。这意味着使用 `gfortran` 6.X 构建的代码不能与使用 `gfortran` 7.X 构建的代码链接。因此，我们针对多个不同的 `gfortran` 版本编译所有 `gfortran` 代码，然后在运行时根据当前运行进程的现有链接决定下载哪个。
 
 
 * `cxx11` string ABI
