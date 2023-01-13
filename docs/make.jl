@@ -21,6 +21,6 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/JuliaPackaging/BinaryBuilder.jl.git",
-    push_preview = true,
+    repo = "github.com/RexWzh/BinaryBuilder.jl.git",
+    # push_preview = true,
 )
