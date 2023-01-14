@@ -575,7 +575,6 @@ Note that this feature is rolling out to new JLL packages as they are rebuilt; i
 
 ## 在本地构建自定义 JLL 包
 
-
 When building a new version of a JLL package, if `--deploy` is passed to `build_tarballs.jl` then a newly-built JLL package will be deployed to a GitHub repository.  (Read the documentation in the [Command Line](@ref) section or given by passing `--help` to a `build_tarballs.jl` script for more on `--deploy` options).  If `--deploy=local` is passed, the JLL package will still be built in the `~/.julia/dev/` directory, but it will not be uploaded anywhere.  This is useful for local testing and validation that the built artifacts are working with your package.
 
 在构建新版本的 JLL 包时，如果将 `--deploy` 传递给 `build_tarballs.jl`，则新构建的 JLL 包将部署到 GitHub 存储库。 （阅读 [命令行](@ref) 部分中的文档或通过将 `--help` 传递给 `build_tarballs.jl` 脚本来获取有关 `--deploy` 选项的更多信息）。如果传递 `--deploy=local` ，JLL 包仍将构建在 `~/.julia/dev/` 目录中，但不会上传到任何地方。这对于本地测试和验证构建的工件是否与您的包一起工作很有用。

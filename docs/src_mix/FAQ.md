@@ -2,7 +2,6 @@
 # Frequently Asked Questions
 # 常见问题
 
-
 ### I'm having trouble compiling `<project name here>`
 ### 我在编译 `<project name here>` 时遇到问题
 
@@ -185,7 +184,6 @@ The list of sources is a vector of [`BinaryBuilder.AbstractSource`](@ref)s.  Wha
   ```
   $ curl -L http://example.org/file.tar.gz | shasum -a 256
   ```
-
 
   replacing `http://example.org/file.tar.gz` with the actual URL of the file you want to download.
 
