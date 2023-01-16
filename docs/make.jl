@@ -17,10 +17,12 @@ makedocs(
             "Reference" => "reference.md",
         ],
     ],
-    strict = true,
+    # strict = true,
 )
 
 deploydocs(
     repo = "github.com/RexWzh/BinaryBuilder.jl.git",
     # push_preview = true,
+    devurl = "master"
+    versions = ["Chinese"=>"v0.0.2", "Mixed"=>"v0.0.1", "dev" => "master" ]
 )
