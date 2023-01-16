@@ -1,6 +1,6 @@
 
 # BinaryBuilder.jl
-Julia 包 `BinaryBuilder.jl`](https://github.com/JuliaPackaging/BinaryBuilder.jl) 的目的是提供一个系统来编译第三方二进制依赖项，该系统应该可以在官方 Julia 发行版所在的任何地方工作。特别是，使用此软件包，你将能够将 C、C++、Fortran、Rust、Go 等软件的大型预先存在的代码库编译成二进制文件，这些二进制文件可以在非常广泛的范围内下载和加载/运行机器。由于在这个软件包需要支持的越来越多的平台上本地编译软件包很困难（而且通常很昂贵），我们专注于提供一组 Linux 托管的交叉编译器。因此，这个包将搭建一个环境来对所有主要平台进行交叉编译，并尽最大努力使编译过程尽可能轻松。
+Julia 包 [`BinaryBuilder.jl`](https://github.com/JuliaPackaging/BinaryBuilder.jl) 的目的是提供一个系统来编译第三方二进制依赖项，该系统应该可以在官方 Julia 发行版所在的任何地方工作。特别是，使用此软件包，你将能够将 C、C++、Fortran、Rust、Go 等软件的大型预先存在的代码库编译成二进制文件，这些二进制文件可以在非常广泛的范围内下载和加载/运行机器。由于在这个软件包需要支持的越来越多的平台上本地编译软件包很困难（而且通常很昂贵），我们专注于提供一组 Linux 托管的交叉编译器。因此，这个包将搭建一个环境来对所有主要平台进行交叉编译，并尽最大努力使编译过程尽可能轻松。
 
 注意当前 BinaryBuilder 本身仅在 Linux `x86_64` 和 macOS `x86_64` 系统上运行，Windows 支持正在积极开发中。在 macOS 和 Windows 上，你必须安装 `docker` 作为后端虚拟化引擎。注意 Docker Desktop 是推荐的版本; 如果你安装了 Docker Machine，它可能无法正常工作或可能需要额外的配置。
 
