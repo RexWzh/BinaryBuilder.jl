@@ -175,7 +175,7 @@ products = [
 
 
 ### LibraryProduct
-### 图书馆产品
+### 库产品
 
 
 A [`LibraryProduct`](@ref) is a shared library that can be [`ccall`](https://docs.julialang.org/en/v1/manual/calling-c-and-fortran-code/)ed from Julia.  Assuming that the product is called `libdataproc`, the wrapper defines the following variables:
@@ -299,7 +299,7 @@ We detail below a couple of different ways to override the artifact of a JLL pac
 
 In the event that a user wishes to override the content within a `dev`'ed JLL package, the user may use the `dev_jll()` method provided by JLL packages to check out a mutable copy of the package to their `~/.julia/dev` directory.  An `override` directory will be created within that package directory, providing a convenient location for the user to copy in their own files over the typically artifact-sourced ones.  See the segment on "Building and testing JLL packages locally" in the [Building Packages](./building.md) section of this documentation for more information on this capability.
 
-如果用户希望覆盖“开发”的 JLL 包中的内容，用户可以使用 JLL 包提供的 `dev_jll()` 方法将包的可变副本检出到他们的 `~/ .julia/dev` 目录。该包目录中将创建一个 `override` 目录，为用户提供一个方便的位置，以便将他们自己的文件复制到通常的工件源文件上。有关此功能的更多信息，请参阅本文档的 [Building Packages](./building.md) 部分中的“Building and testing JLL packages locally”部分。
+如果用户希望覆盖“开发”的 JLL 包中的内容，用户可以使用 JLL 包提供的 `dev_jll()` 方法将包的可变副本检出到他们的 `~/ .julia/dev` 目录。该包目录中将创建一个 `override` 目录，为用户提供一个方便的位置，以便将他们自己的文件复制到通常的工件源文件上。有关此功能的更多信息，请参阅本文档的 [Building Packages](./building.md) 部分中的“在本地构建和测试 JLL 包”部分。
 
 
 ### Non-`dev`'ed JLL packages
