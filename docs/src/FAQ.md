@@ -32,7 +32,7 @@ BinaryBuilder 需要的是找到整理在 `$prefix` 目录下的相关文件（�
 
 当脚本完成时，BinaryBuilder 期望在 `${libdir}` 或 `${bindir}` 中找到至少一个为预期架构构建的工件。
 
-还请记住，您应该根据需要使用标准环境变量，如 `CC`、`CXX`、`CFLAGS`、`LDFLAGS` 以便交叉编译。请参阅 [构建包的提示](build_tips.md) 部分中的变量列表。
+还请记住，您应该根据需要使用标准环境变量，如 `CC`、`CXX`、`CFLAGS`、`LDFLAGS` 以便交叉编译。请参阅 [构建提示](build_tips.md) 部分中的变量列表。
 
 ### 我可以在特定的构建环境中打开一个 shell 来进行一些快速测试吗？
 

@@ -1,7 +1,6 @@
-
 # 构建包
 
-`BinaryBuilder.jl` 构建脚本（通常为 `build_tarballs.jl` 文件），示例如下：
+`BinaryBuilder.jl` 的构建脚本通常为 `build_tarballs.jl` 文件，示例如下：
 
 ```julia
 using BinaryBuilder
@@ -32,13 +31,13 @@ dependencies = [
 build_tarballs(ARGS, name, version, sources, script, platforms, products, dependencies)
 ```
 
-[`build_tarballs`](@ref) 函数接受上面定义的变量并运行构建，将输出压缩包放入 `./products` 目录，并可选择生成和发布 [JLL 包](./jll.md )。让我们更详细地了解构建器的成分是什么。
+[`build_tarballs`](@ref) 函数接受前边定义的变量并运行构建，将输出压缩包放入 `./products` 目录，并可选择生成和发布 [JLL 包](./jll.md )。让我们更详细地了解构建器的成分是什么。
 
-## 名称
+## 名称 `name`
 
 这是将在压缩包和 JLL 包中使用的名称。它应该是**上游包的名称**，而不是它提供的特定库或可执行文件的名称，即使它们可能重合。名称的大小写应与上游包的大小写匹配。请注意，该名称应该是一个有效的 Julia 标识符，因此它满足了一些要求，包括：
 
-* 不能以数字开头，
+* 不能以数字开头
 
 * 名称中不能包含空格、破折号或点，但可以使用下划线来代替
 
@@ -54,9 +53,9 @@ false
 
 请注意，`_jll` 后缀会自动附加到生成的 JLL 包的名称中。
 
-## 版本号
+## 版本号 `version`
 
-这是压缩包中使用的版本号，应该与上游包的版本一致。但是，请注意，这应该只包含主要、次要和补丁号，因此
+这是压缩包中使用的版本号，应该**与上游包的版本一致**。但是，请注意，版本号应该只包含主要、次要和补丁号，因此
 
 ```julia
 julia> v"1.2.3"
@@ -77,9 +76,9 @@ v"1.2.3+3"
 
 生成的 JLL 包将自动添加一个内部版本号，每次重新构建相同的包版本时都会增加它。
 
-## 来源
+## 来源 `sources`
 
-源是将用于构建脚本编译的内容，它们将被放置在构建环境中的 `${WORKSPACE}/srcdir` 下。源可以是以下类型：
+源是将被用于编译构建的内容，它们在构建过程中被放置在构建环境的 `${WORKSPACE}/srcdir` 下。源可以是以下类型：
 
 * [`ArchiveSource`](@ref)：压缩文件（例如，`tar.gz`，`tar.bz2`，`tar.xz`， `zip`) ，将被下载并自动解压；
 
@@ -97,13 +96,13 @@ v"1.2.3+3"
 
 !!! note
 
-  每个构建器都应该构建一个包：不要使用多个源将多个包捆绑到一个配方中。相反，单独构建每个包，并根据需要将它们用作二进制依赖项。这将增加包的可重用性。
+  每个构建器都应该构建一个包：**不要使用多个源将多个包捆绑到一个配方中**。相反，单独构建每个包，并根据需要将它们用作二进制依赖项。这将增加包的可重用性。
 
-## 构建脚本
+## 构建脚本 `script`
 
 该脚本是在构建环境中执行的 bash 脚本，构建环境使用 Musl C 库的 `x86_64` Linux 环境，基于 Alpine Linux（三元组：`x86_64-linux-musl`）。 [构建提示](./build_tips.md) 部分提供了有关在构建脚本中执行操作的更多详细信息。
 
-## 平台
+## 平台 `platforms`
 
 构建器还应指定要为其构建包的平台列表。在撰写本文时，我们支持 Linux（`x86_64`、`i686`、`armv6l`、`armv7l`、`aarch64`、`ppc64le`）、Windows（`x86_64`、`i686`）、macOS（`x86_64 `、`aarch64`) 和 FreeBSD (`x86_64`)。如果可能，我们会尝试为所有支持的平台构建，在这种情况下你可以设置
 
@@ -121,8 +120,7 @@ triplet.(supported_platforms())
 
 平台的三元组将用于生成压缩包的名称。
 
-对于某些包，（交叉）编译可能无法用于所有这些平台，或者您有兴趣仅为其中的一个子集构建包。仅为某些平台构建的包的示例为
-
+对于某些包，（交叉）编译可能无法用于所有这些平台，或者您有兴趣仅为其中的一个子集构建包。仅为某些平台构建的包的示例包括
 
 * [`libevent`](https://github.com/JuliaPackaging/Yggdrasil/blob/eb3728a2303c98519338fe0be370ef299b807e19/L/libevent/build_tarballs.jl#L24-L36);
 
@@ -130,11 +128,13 @@ triplet.(supported_platforms())
 
   这个构建仅针对 Linux 和 FreeBSD 系统，自动从 `supported_platforms` 中筛出，而不明确列出平台。
 
+!!! note 译注
+   
+   注意区分**目标系统与主机系统**，参见 [构建提示](./build_tips.md) 的 [目标系统与主机系统](./build_tips.md#Target-systems-vs-host-systems-1) 。
 
 ### 扩展 C++ 字符串 ABI 或 libgfortran 版本
 
-
-构建库不是一项微不足道的任务，它会带来很多兼容性问题，其中一些问题在 [Tricksy Gotchas](./tricksy_gotchas.md) 中有详细说明。
+构建库不是一项微不足道的任务，它会带来很多兼容性问题，其中一些问题在 [棘手的陷阱](./tricksy_gotchas.md) 中有详细说明。
 
 特别注意这两个不兼容性问题：
 
@@ -206,13 +206,11 @@ platforms = [AnyPlatform()]
 
 使用 `AnyPlatform` 的构建器示例：
 
-
 * [`OpenCL_Headers`](https://github.com/JuliaPackaging/Yggdrasil/blob/1e069da9a4f9649b5f42547ced7273c27bd2db30/O/OpenCL_Headers/build_tarballs.jl)
 
 * [`SPIRV_Headers`](https://github.com/JuliaPackaging/Yggdrasil/blob/1e069da9a4f9649b5f42547ced7273c27bd2db30/S/SPIRV_Headers/build_tarballs.jl).
 
 ## 产品
-
 
 产品是预期出现在生成的压缩包中的文件。如果在压缩包中找不到产品，构建将失败。产品可以是以下类型：
 
@@ -228,7 +226,7 @@ platforms = [AnyPlatform()]
 
 审核将对构建器的产品执行一系列健全性检查，除了 `FileProduct`，同时尝试自动修复一些常见问题。
 
-您不需要将最终会出现在压缩包中的 _所有_ 文件列为产品，而只需列出你想要确保存并且希望审计对其执行检查的文件。这通常包括共享库和二进制可执行文件。如果您还生成 JLL 包，则产品将具有一些变量，以便于引用它们。有关此的更多信息，请参阅 [JLL packages](./jll.md) 的文档。
+您不需要将最终会出现在压缩包中的 _所有_ 文件列为产品，而只需列出你想要确保存并且希望审计对其执行检查的文件。这通常包括共享库和二进制可执行文件。如果您还生成 JLL 包，则产品将具有一些变量，以便于引用它们。有关此的更多信息，请参阅 [JLL 包](./jll.md) 的文档。
 
 不同类型产品的包列表：
 
@@ -246,7 +244,7 @@ dependencies = [
 ]
 ```
 
-* [`Dependency`](@ref) 指定构建和加载所需的 JLL 包并导入到当前的构建器。目标平台的二进制文件将被安装；
+* [`Dependency`](@ref) 指定构建和加载所需的 JLL 包并导入到当前的构建器（最常见），目标平台的二进制文件将被安装；
 
 * [`RuntimeDependency`](@ref)：仅在运行时需要的 JLL 包。在构建阶段，它的工件将不会被安装。
 
@@ -258,12 +256,16 @@ dependencies = [
 
 目标系统的依赖项（`Dependency` 和 `BuildDependency` ）将安装在构建环境中的 `${prefix}` 下，而主机系统的依赖项（`HostBuildDependency`）将安装在 `${host_prefix}` 下。
 
-
 在向导中，可以通过提示指定依赖项：*Do you require any (binary) dependencies? [y/N]*。
 
 依赖于其他二进制文件的构建器示例包括：
 
 * [`Xorg_libX11`](https://github.com/JuliaPackaging/Yggdrasil/blob/eb3728a2303c98519338fe0be370ef299b807e19/X/Xorg_libX11/build_tarballs.jl#L36-L42) 在构建和运行时依赖于 `Xorg_libxcb_jll` 和 `Xorg_xtrans_jll`，仅在构建时依赖于 `Xorg_xorgproto_jll` 和 `Xorg_util_macros_jll`。
+
+
+!!! note 译注-重新强调
+
+  每个构建器都应该构建一个包：**不要使用多个源将多个包捆绑到一个配方中**。相反，单独构建每个包，并根据需要将它们用作二进制依赖项。这将增加包的可重用性。
 
 ### 特定于平台的依赖项
 
@@ -315,5 +317,26 @@ Dependency("Package_jll"; platforms=filter(!Sys.iswindows, platforms))
 
 ## 在本地构建自定义 JLL 包
 
-在构建新版本的 JLL 包时，如果将 `--deploy` 传递给 `build_tarballs.jl`，则新构建的 JLL 包将部署到 GitHub 存储库。 （阅读 [命令行](@ref) 部分中的文档或通过将 `--help` 传递给 `build_tarballs.jl` 脚本来获取有关 `--deploy` 选项的更多信息）。如果传递 `--deploy=local` ，JLL 包仍将构建在 `~/.julia/dev/` 目录中，但不会上传到任何地方。这对于本地测试和验证构建的工件是否与您的包一起工作很有用。
+在构建新版本的 JLL 包时，如果将 `--deploy` 传递给 `build_tarballs.jl`，则新构建的 JLL 包将部署到 GitHub 存储库。（阅读 [命令行](@ref) 部分中的文档或通过将 `--help` 传递给 `build_tarballs.jl` 脚本来获取有关 `--deploy` 选项的更多信息）。如果传递 `--deploy=local` ，JLL 包仍将构建在 `~/.julia/dev/` 目录中，但不会上传到任何地方。这对于本地测试和验证构建的工件是否与您的包一起工作很有用。
 
+## 总结
+> 以下为翻译补充内容。
+
+构建 JLL 包的基本流程：
+   - 编写 `build_tarballs.jl` 脚本
+   - 本地执行 `julia build_tarballs.jl`，生成 `build` 目录和 `products` 目录
+   - 如果出现错误，执行 `julia build_tarballs.jl --debug --verbose <平台三元组>` 排查错误，针对整体或针对特定平台，修改脚本和二进制依赖，脚本编写规则参考 [构建提示](./build_tips.md)
+   - git 克隆 [Yggdrasil](https://github.com/JuliaPackaging/Yggdrasil) 仓库，将 `build_tarballs.jl` 脚本放入其中并提交 PR
+   - PR 审核通过后，自动向 [JuliaBinaryWrappers](https://github.com/JuliaBinaryWrappers) 发起 JLL 包的 PR，构建后打开对 Julia 注册表 `General` 的合并请求
+
+本页介绍 `build_tarballs.jl` 脚本，包括：
+
+| 变量名 | 描述 |
+| --- | --- |
+| `name` | 编写目标包的名称 |
+| `version` | 编写目标包的版本，可以设置多个，参考 [ImageMagick](https://github.com/JuliaPackaging/Yggdrasil/blob/master/I/ImageMagick/build_tarballs.jl)
+| `sources` | 编写目标包的下载地址 |
+| `script` | 编写目标包的构建脚本，编写规则参看 [构建提示](./build_tips.md) |
+| `platforms` | 编写目标包的构建平台 |
+| `products` | 编写目标包的构建结果 |
+| `dependencies` | 编写目标包的依赖包 |

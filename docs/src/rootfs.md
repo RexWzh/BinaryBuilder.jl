@@ -7,5 +7,5 @@
 
 每个分片都可以作为解压的目录树以及 `.squashfs` 图像使用。 `.squashfs` 图像占用的磁盘空间要少得多，但不幸的是，它们需要主机上的 `root` 权限，并且只能在 Linux 上运行。这有望在未来的 Linux 内核版本中得到修复，但如果您拥有 sudo 权限，通常需要使用 `.squashfs` 文件来节省网络带宽和磁盘空间。有关如何执行此操作的说明，请参阅 [环境变量](environment_variables.md)。
 
-在 RootFS 映像中启动进程时，`BinaryBuilder.jl` 会设置一组环境变量以启用特定于目标的编译器工具链，以及其他细节。有关更多详细信息，请参阅 [Build Tips](build_tips.md) 文档页面，以及本仓库的 `src/Runner.jl` 文件。
+在 RootFS 映像中启动进程时，`BinaryBuilder.jl` 会设置一组环境变量以启用特定于目标的编译器工具链，以及其他细节。有关更多详细信息，请参阅 [构建提示](build_tips.md) 文档页面，以及本仓库的 `src/Runner.jl` 文件。
 
