@@ -23,7 +23,7 @@ state = BinaryBuilder.Wizard.load_wizard_state() # select 'resume'
 BinaryBuilder.Wizard.print_build_tarballs(stdout, state)
 ```
 
-然后可以根据需要编辑构建脚本——例如禁用失败的平台——并直接使用 `julia build_tarballs.jl --debug --verbose` 重新运行（参见[手动构建文档](https://docs. binarybuilder.org/dev/#Manually-create-or-edit-build_tarballs.jl)) 调试和完成*无需*从头开始。
+然后可以根据需要编辑构建脚本——例如禁用失败的平台——并直接使用 `julia build_tarballs.jl --debug --verbose` 重新运行（参见[手动构建文档](https://docs.binarybuilder.org/dev/#Manually-create-or-edit-build_tarballs.jl)) 调试和完成*无需*从头开始。
 
 ### 找不到依赖的头文件
 
@@ -77,7 +77,7 @@ make install
 
 ### 使用旧的 GCC 版本构建一个库，该库具有使用较新的 GCC 版本构建的依赖项
 
-`build_tarballs` 函数的关键字参数 `preferred_gcc_version` 允许您在需要时选择更新的编译器来构建库。纯 C 库具有良好的兼容性，因此使用较新编译器构建的库应该能够在使用较旧 GCC 版本的系统上运行而不会出现问题。但是，请记住，`BinaryBuilder.jl` 中的每个 GCC 版本都捆绑了特定版本的 binutils——它提供了 `ld` 链接器——请参阅[此表](https://github.com/JuliaPackaging/Yggdrasil/blob/master/RootFS.md#compiler-shards）。
+`build_tarballs` 函数的关键字参数 `preferred_gcc_version` 允许您在需要时选择更新的编译器来构建库。纯 C 库具有良好的兼容性，因此使用较新编译器构建的库应该能够在使用较旧 GCC 版本的系统上运行而不会出现问题。但是，请记住，`BinaryBuilder.jl` 中的每个 GCC 版本都捆绑了特定版本的 binutils——它提供了 `ld` 链接器——请参阅[此表](https://github.com/JuliaPackaging/Yggdrasil/blob/master/RootFS.md#compiler-shards)。
 
 
 `ld` 非常挑剔，该工具的给定版本不喜欢与被链接较新版本的库进行链接：这意味着如果您使用 GCC v6 构建库，则需要构建所有库 GCC >= v6 取决于它。如果你不这样做，你会得到这样一个神秘的错误：
@@ -93,7 +93,7 @@ make install
 build_tarballs(ARGS, name, version, sources, script, platforms, products, dependencies; preferred_gcc_version=v"8")
 ```
 
-例如，FFMPEG [必须使用 GCC v8 构建](https://github.com/JuliaPackaging/Yggdrasil/blob/9a1ae803823e0dba7628bc71ff794d0c79e39c95/F/FFMPEG/build_tarballs.jl#L140) 因为 LibVPX [需要 GCC v8](https: //github.com/giordano/Yggdrasil/blob/2b13acd75081bc8105685602fcad175296264243/L/LibVPX/build_tarballs.jl）。
+例如，FFMPEG [必须使用 GCC v8 构建](https://github.com/JuliaPackaging/Yggdrasil/blob/9a1ae803823e0dba7628bc71ff794d0c79e39c95/F/FFMPEG/build_tarballs.jl#L140) 因为 LibVPX [需要 GCC v8](https://github.com/giordano/Yggdrasil/blob/2b13acd75081bc8105685602fcad175296264243/L/LibVPX/build_tarballs.jl)。
 
 一般来说，我们会尝试使用尽可能旧的 GCC 版本（v4.8.5 是当前可用的最旧版本）来构建，以获得最大的兼容性。
 
@@ -107,7 +107,7 @@ build_tarballs(ARGS, name, version, sources, script, platforms, products, depend
 ./foreign.exe: line 1: syntax error: unexpected end of file (expecting ")")
 ```
 
-这是交叉编译时最糟糕的情况之一，并且没有简单的解决方案。您必须查看构建过程以查看是否可以跳过运行可执行文件（例如，参见 [Yggdrasil#351](https://github.com/JuliaPackaging/Yggdrasil/pull/ 351)), 或者用别的东西代替。如果可执行文件是仅编译时实用程序，请尝试使用本机编译器构建它（例如，请参阅 [Yggdrasil#351](https://github.com/JuliaPackaging/Yggdrasil 中用于构建本机 `mkdefs` 的补丁/拉/351））
+这是交叉编译时最糟糕的情况之一，并且没有简单的解决方案。您必须查看构建过程以查看是否可以跳过运行可执行文件（例如，参见 [Yggdrasil#351](https://github.com/JuliaPackaging/Yggdrasil/pull/351)), 或者用别的东西代替。如果可执行文件是仅编译时实用程序，请尝试使用本机编译器构建它（例如，请参阅 [Yggdrasil#351](https://github.com/JuliaPackaging/Yggdrasil) 中用于构建本机 `mkdefs` 的补丁）
 
 ## Musl Linux
 
@@ -125,15 +125,9 @@ build_tarballs(ARGS, name, version, sources, script, platforms, products, depend
 
 有两种选择可以解决此问题：
 
-* 通过使用 `build_tarballs(...; preferred_gcc_version=v"6")` 需要 GCC 6。
+* 通过使用 `build_tarballs(...; preferred_gcc_version=v"6")` 需要 GCC 6。在某些情况下，这可能是最简单的选择。作为例子，参见 [Yggdrasil#3974](https://github.com/JuliaPackaging/Yggdrasil/pull/3974)。
 
-  在某些情况下，这可能是最简单的选择。
-
-  作为例子，参见 [Yggdrasil#3974](https://github.com/JuliaPackaging/Yggdrasil/pull/3974)
-
-* 如果使用旧版本的 GCC 对于更广泛的兼容性很重要，您可以应用 [此补丁](https://github.com/JuliaPackaging/Yggdrasil/blob/48ac662cd53e02aff0189c81008874a04f7172c7/Z/ZeroMQ/bundled/patches/mm_malloc.patch) 到构建工具链。
-
-  作为例子，参见 [ZeroMQ](https://github.com/JuliaPackaging/Yggdrasil/blob/48ac662cd53e02aff0189c81008874a04f7172c7/Z/ZeroMQ/build_tarballs.jl#L20-L26) 的配方。
+* 如果使用旧版本的 GCC 对于更广泛的兼容性很重要，您可以应用 [此补丁](https://github.com/JuliaPackaging/Yggdrasil/blob/48ac662cd53e02aff0189c81008874a04f7172c7/Z/ZeroMQ/bundled/patches/mm_malloc.patch) 到构建工具链。作为例子，参见 [ZeroMQ](https://github.com/JuliaPackaging/Yggdrasil/blob/48ac662cd53e02aff0189c81008874a04f7172c7/Z/ZeroMQ/build_tarballs.jl#L20-L26) 的配方。
 
 ## PowerPC Linux
 
@@ -198,7 +192,7 @@ libtool: error: can't build i686-w64-mingw32 shared library unless -no-undefined
 
 在这些情况下，您必须将 `-no-undefined` 选项传递给链接器，如第二条消息明确建议的那样。
 
-正确的修复需要将 `-no-undefined` 标志添加到 `Makefile.am` 文件中相应 libtool 存档的 `LDFLAGS`。作为解决方案的例子，参考 [`CALCEPH`](https://github.com/JuliaPackaging/Yggdrasil/blob/d1e5159beef7fcf8c631e893f62925ca5bd54bec/C/CALCEPH/build_tarballs.jl#L19)、[`ERFA`](https://github.com/JuliaPackaging/Yggdrasil/blob/d1e5159beef7fcf8c631e893f62925ca5bd54bec/E/ERFA/build_tarballs.jl#L17) 和 [`libsharp2`](https://github.com/JuliaPackaging/Yggdrasil/blob/d1e5159beef7fcf8c631e893f62925ca5bd54bec/L/libsharp2/build_tarballs.jl#L19）。
+正确的修复需要将 `-no-undefined` 标志添加到 `Makefile.am` 文件中相应 libtool 存档的 `LDFLAGS`。作为解决方案的例子，参考 [`CALCEPH`](https://github.com/JuliaPackaging/Yggdrasil/blob/d1e5159beef7fcf8c631e893f62925ca5bd54bec/C/CALCEPH/build_tarballs.jl#L19)、[`ERFA`](https://github.com/JuliaPackaging/Yggdrasil/blob/d1e5159beef7fcf8c631e893f62925ca5bd54bec/E/ERFA/build_tarballs.jl#L17) 和 [`libsharp2`](https://github.com/JuliaPackaging/Yggdrasil/blob/d1e5159beef7fcf8c631e893f62925ca5bd54bec/L/libsharp2/build_tarballs.jl#L19)。
 
 修补 `Makefile.am` 文件的一种快速的替代方法是仅将 `LDFLAGS=-no-undefined` 传递给 `make`：
 

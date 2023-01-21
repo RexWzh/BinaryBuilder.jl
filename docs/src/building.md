@@ -95,9 +95,9 @@ v"1.2.3+3"
 
 不要将源代码与 [二进制依赖项](#Binary-dependencies-1) 混淆。
 
-!!! 注释
+!!! note
 
-    每个构建器都应该构建一个包：不要使用多个源将多个包捆绑到一个配方中。相反，单独构建每个包，并根据需要将它们用作二进制依赖项。这将增加包的可重用性。
+  每个构建器都应该构建一个包：不要使用多个源将多个包捆绑到一个配方中。相反，单独构建每个包，并根据需要将它们用作二进制依赖项。这将增加包的可重用性。
 
 ## 构建脚本
 
@@ -140,7 +140,8 @@ triplet.(supported_platforms())
 
 * GCC 附带的标准 C++ 库对于 `std::string` 可以用 [两个不兼容的 ABIs](https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_dual_abi.html) 之一，一个旧的通常被称为 C++03 字符串 ABI，一个新的则符合 2011 C++ 标准。
 
-!!! 注释
+!!! note
+
     此 ABI *不* 与源代码使用的 C++ 标准有关，事实上，你可以使用 C++11 `std::string` ABI 和 C++03 `std::string` ABI 的 C++11 库来构建 C++03 库。这是通过适当设置 `_GLIBCXX_USE_CXX11_ABI` 宏来实现的。
 
   这意味着当使用 GCC 构建 C++ 库或公开 `std::string` ABI 的程序时，您必须确保用户将运行与他们的 `std::string` ABI 匹配的二进制文件。您可以在平台的 `compiler_abi` 部分手动指定 `std::string` ABI，但 `BinaryBuilder` 允许您自动扩展平台列表以包含 C++03 `std::string` 的条目 ABI 和另一个用于 C++11 `std::string` ABI 的 ABI，使用 [`expand_cxxstring_abis`](@ref) 函数：
@@ -276,7 +277,8 @@ Dependency("Package_jll"; platforms=filter(!Sys.iswindows, platforms))
 
 这些平台依赖信息也被传输到 JLL 包：包装器仅在需要时加载依赖于该平台的 JLL 依赖项。
 
-!!! 警告
+!!! warning
+
    Julia 的包管理器没有可选依赖项或平台相关依赖项的概念：这意味着当在您的环境中安装 JLL 包时，在任何情况下，它的所有依赖项都将被安装。只有在运行必要时才会加载特定于平台的依赖项。
 
    出于同样的原因，即使您指定平台不需要的依赖项，如果它也是其他一些依赖项所需的间接依赖项，构建配方仍可能会引入它。目前，`BinaryBuilder.jl` 在安装依赖项的工件时无法传播依赖项依赖于平台的信息。

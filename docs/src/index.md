@@ -73,7 +73,7 @@ julia build_tarballs.jl --debug --verbose aarch64-linux-musl,arm-linux-musleabih
 
 虽然 `BinaryBuilder.jl` 不能保证始终具有可重现的构建，但它在大多数情况下都能做到这点。
 
-`BinaryBuilder.jl` 中的可重复性还包括生成的压缩包：它们是使用 [`Tar.jl`](https://github.com/JuliaIO/Tar.jl) 创建的，采取了[一些措施](https://github.com/JuliaIO/Tar.jl/blob/1de4f92dc1ba4de4b54ac5279ec1d84fb15948f6/README.md#reproducibility）以确保具有相同 git 树哈希值的压缩包的可再现性。
+`BinaryBuilder.jl` 中的可重复性还包括生成的压缩包：它们是使用 [`Tar.jl`](https://github.com/JuliaIO/Tar.jl) 创建的，采取了[一些措施](https://github.com/JuliaIO/Tar.jl/blob/1de4f92dc1ba4de4b54ac5279ec1d84fb15948f6/README.md#reproducibility)以确保具有相同 git 树哈希值的压缩包的可再现性。
 
 如果你使用相同版本的 BinaryBuilder 多次重建同一个包，生成的包含主要产品的压缩包（即，不包括不可重现的日志文件）应该始终具有相同的 git 树哈希和 SHA256 总和，在构建过程结束时打印到屏幕上并存储在 [JLL 包](@ref JLL-packages) 的 `Artifacts.toml` 文件中的信息。
 

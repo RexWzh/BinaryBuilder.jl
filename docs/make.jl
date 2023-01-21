@@ -23,5 +23,5 @@ makedocs(
 deploydocs(
     repo = "github.com/RexWzh/BinaryBuilder.jl.git",
     # push_preview = true,
-    versions = ["Chinese" => "v0.0.2", "Mixed" => "v0.0.1"]
+    versions = ["Chinese" => "v0.0.3"]
 )

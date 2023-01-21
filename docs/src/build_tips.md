@@ -131,7 +131,8 @@ BinaryBuilder 提供的 Rust 工具链会自动选择合适的目标和要使用
 
 * [Librsvg](https://github.com/JuliaPackaging/Yggdrasil/blob/ea43d07d264046e8c94a460907bba209a015c10f/L/Librsvg/build_tarballs.jl#L35-L45)：它使用基于 Autoconf 的构建系统，该系统将在内部调用“cargo build” , 但用户必须遵循 `./configure` + `make` + `make install` 顺序。
 
-!!! 警告
+!!! warning
+
   当前使用的 Rust 工具链不适用于 `i686-w64-mingw32`（32 位 Windows）平台。
 
 ## 在向导中编辑文件

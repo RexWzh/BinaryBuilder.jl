@@ -198,7 +198,8 @@ Bzip2 = "/usr/local"
 
 您可以使用 [Preferences.jl](https://github.com/JuliaPackaging/Preferences.jl) 覆盖 JLL 中的特定产品（库、可执行文件或文件），而不是覆盖整个工件。
 
-!!! 兼容问题
+!!! compat
+
     本节需要 Julia 1.6 或更高版本。
 
 作为例子，要覆盖我们的 `libbz2`：
@@ -215,7 +216,8 @@ set_preferences!(
 
 请注意，产品名称是 `libbzip2`，但我们使用 `libbzip2_path`。
 
-!!! 警告
+!!! warning
+
     在两种常见情况下这将不起作用：
   1. JLL 是 [Julia stdlib](https://github.com/JuliaLang/julia/tree/master/stdlib) 的一部分，例如 `Zlib_jll`
   2. JLL 尚未使用 [JLLWrappers.jl](https://github.com/JuliaPackaging/JLLWrappers.jl) 作为依赖项进行编译。在这种情况下，这意味着 JLL 的最后一次构建早于 JLLWrappers 包的引入，需要重新构建。请在 [Yggdrasil](https://github.com/JuliaPackaging/Yggdrasil/) 上提出问题请求新构建，或提出拉取请求以更新相关的 `build_tarballs.jl` 脚本。
