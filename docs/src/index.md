@@ -24,8 +24,7 @@ state = BinaryBuilder.run_wizard()
 以及屏幕上的说明。你可以观看[asciinema demo](https://asciinema.org/a/304105)以了解使用向导向的方法。
 
 !!! note
-   
-   该向导是一个很棒的工具，特别是刚开始用 BinaryBuilder 为新包创建简单的配方。然而，它缺乏在 `build_tarballs.jl` 脚本中可以使用的所有选项的完全控制。要生成此文件，可以克隆 `Yggdrasil`，复制现有的构建配方，修改它，并提交新的拉取请求（在 [构建包](building.md) 中有更详细的说明）。当你想要更新现有的配方而不是从头开始使用向导时，手动编辑 `build_tarballs.jl` 脚本也是推荐的方法。
+    该向导是一个很棒的工具，特别是刚开始用 BinaryBuilder 为新包创建简单的配方。然而，它缺乏在 `build_tarballs.jl` 脚本中可以使用的所有选项的完全控制。要生成此文件，可以克隆 `Yggdrasil`，复制现有的构建配方，修改它，并提交新的拉取请求（在 [构建包](building.md) 中有更详细的说明）。当你想要更新现有的配方而不是从头开始使用向导时，手动编辑 `build_tarballs.jl` 脚本也是推荐的方法。
 
 ### 手动创建或编辑 `build_tarballs.jl`
 
@@ -53,22 +52,21 @@ julia build_tarballs.jl --debug --verbose aarch64-linux-musl,arm-linux-musleabih
 
 但是，如果你决定使用此工作流程，则需要手动提交 [Yggdrasil](https://github.com/JuliaPackaging/Yggdrasil/) 的拉取请求。
 
-!!! note 译注
-  
-   在脚本
-
-   ```bash
-   julia build_tarballs.jl --debug --verbose aarch64-linux-musl,arm-linux-musleabihf
-   ```
-
-   中，`--verbose` 后边指定目标平台的三元组列表，该列表可以通过执行
-   
-   ```julia
-   using BinaryBuilder
-   triplet.(supported_platforms())
-   ```
-
-   来查看支持的列表。此外，多个平台以 `,` 隔开，且不能包含空格。
+!!! note
+    （译注）在脚本
+    
+    ```bash
+    julia build_tarballs.jl --debug --verbose aarch64-linux-musl,arm-linux-musleabihf
+    ```
+    
+    中，`--verbose` 后边指定目标平台的三元组列表，该列表可以通过执行
+    
+    ```julia
+    using BinaryBuilder
+    triplet.(supported_platforms())
+    ```
+    
+    来查看。此外，多个平台以 `,` 隔开，且不能包含空格。
 
 ### GitHub 代码空间
 

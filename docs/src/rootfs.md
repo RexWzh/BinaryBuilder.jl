@@ -1,7 +1,7 @@
 
 # 根文件系统
 
-所有 `BinaryBuilder.jl` 构建所在的执行环境称为“根文件系统”或 _RootFS_。此 RootFS 是使用 Yggdrasil 中 [`0_Rootfs` 目录](https://github.com/JuliaPackaging/Yggdrasil/tree/master/0_RootFS) 包含的构建器脚本构建的。 rootfs 镜像基于 `alpine` docker 镜像，用于为我们支持的每个目标平台构建编译器。目标平台编译器工具链存储在 `/opt/${triplet}` 中，因此 64 位 Linux（使用 `glibc` 作为支持 `libc`）编译器将在 `/opt/x86_64-linux-gnu/bin` 中找到。
+所有 `BinaryBuilder.jl` 构建所在的执行环境称为“根文件系统”或 _RootFS_。此 RootFS 由 Yggdrasil 中 [`0_Rootfs` 目录](https://github.com/JuliaPackaging/Yggdrasil/tree/master/0_RootFS) 包含的构建器脚本构建的。 rootfs 镜像基于 `alpine` docker 镜像，用于为我们支持的每个目标平台构建编译器。目标平台编译器工具链存储在 `/opt/${triplet}` 中，因此 64 位 Linux（使用 `glibc` 作为支持 `libc`）编译器将在 `/opt/x86_64-linux-gnu/bin` 中找到。
 
 每个编译器“分片”都是单独打包的，这样用户就不必为了构建单个平台而下载多 GB 的压缩包。有一个总的“根”分片，以及平台支持分片、GCC 分片、LLVM 分片、Rust 分片等...这些都嵌入在捆绑的 [`Artifacts.toml` 文件](https://github.com/JuliaPackaging/BinaryBuilder.jl/blob/master/Artifacts.toml)，而 `BinaryBuilder.jl` 会按需下载它们，利用 Julia 1.3+ 的新 [Pkg.Artifacts 系统](https://julialang.github.io/Pkg.jl/dev/artifacts/)。
 

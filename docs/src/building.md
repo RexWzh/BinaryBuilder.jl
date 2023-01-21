@@ -95,12 +95,11 @@ v"1.2.3+3"
 不要将源代码与 [二进制依赖项](#Binary-dependencies-1) 混淆。
 
 !!! note
-
-  每个构建器都应该构建一个包：**不要使用多个源将多个包捆绑到一个配方中**。相反，单独构建每个包，并根据需要将它们用作二进制依赖项。这将增加包的可重用性。
+    每个构建器都应该构建一个包：**不要使用多个源将多个包捆绑到一个配方中**。相反，单独构建每个包，并根据需要将它们用作二进制依赖项。这将增加包的可重用性。
 
 ## 构建脚本 `script`
 
-该脚本是在构建环境中执行的 bash 脚本，构建环境使用 Musl C 库的 `x86_64` Linux 环境，基于 Alpine Linux（三元组：`x86_64-linux-musl`）。 [构建提示](./build_tips.md) 部分提供了有关在构建脚本中执行操作的更多详细信息。
+该脚本是在构建环境中执行的 bash 脚本，构建环境使用 Musl C 库的 `x86_64` Linux 环境，基于 Alpine Linux（三元组：`x86_64-linux-musl`）。[构建提示](./build_tips.md) 部分提供了有关在构建脚本中执行操作的更多详细信息。
 
 ## 平台 `platforms`
 
@@ -124,13 +123,12 @@ triplet.(supported_platforms())
 
 * [`libevent`](https://github.com/JuliaPackaging/Yggdrasil/blob/eb3728a2303c98519338fe0be370ef299b807e19/L/libevent/build_tarballs.jl#L24-L36);
 
-* [`Xorg_libX11`]（https://github.com/JuliaPackaging/Yggdrasil/blob/eb3728a2303c98519338fe0be370ef299b807e19/X/Xorg_libX11/build_tarballs.jl#L29）：
+* [`Xorg_libX11`](https://github.com/JuliaPackaging/Yggdrasil/blob/eb3728a2303c98519338fe0be370ef299b807e19/X/Xorg_libX11/build_tarballs.jl#L29)：
 
   这个构建仅针对 Linux 和 FreeBSD 系统，自动从 `supported_platforms` 中筛出，而不明确列出平台。
 
-!!! note 译注
-   
-   注意区分**目标系统与主机系统**，参见 [构建提示](./build_tips.md) 的 [目标系统与主机系统](./build_tips.md#Target-systems-vs-host-systems-1) 。
+!!! note
+    译注：注意区分**目标系统与主机系统**，参见 [构建提示](./build_tips.md) 的 [目标系统与主机系统](./build_tips.md#目标系统与主机系统的依赖关系) 。
 
 ### 扩展 C++ 字符串 ABI 或 libgfortran 版本
 
@@ -141,10 +139,9 @@ triplet.(supported_platforms())
 * GCC 附带的标准 C++ 库对于 `std::string` 可以用 [两个不兼容的 ABIs](https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_dual_abi.html) 之一，一个旧的通常被称为 C++03 字符串 ABI，一个新的则符合 2011 C++ 标准。
 
 !!! note
-
     此 ABI *不* 与源代码使用的 C++ 标准有关，事实上，你可以使用 C++11 `std::string` ABI 和 C++03 `std::string` ABI 的 C++11 库来构建 C++03 库。这是通过适当设置 `_GLIBCXX_USE_CXX11_ABI` 宏来实现的。
 
-  这意味着当使用 GCC 构建 C++ 库或公开 `std::string` ABI 的程序时，您必须确保用户将运行与他们的 `std::string` ABI 匹配的二进制文件。您可以在平台的 `compiler_abi` 部分手动指定 `std::string` ABI，但 `BinaryBuilder` 允许您自动扩展平台列表以包含 C++03 `std::string` 的条目 ABI 和另一个用于 C++11 `std::string` ABI 的 ABI，使用 [`expand_cxxstring_abis`](@ref) 函数：
+这意味着当使用 GCC 构建 C++ 库或公开 `std::string` ABI 的程序时，您必须确保用户将运行与他们的 `std::string` ABI 匹配的二进制文件。您可以在平台的 `compiler_abi` 部分手动指定 `std::string` ABI，但 `BinaryBuilder` 允许您自动扩展平台列表以包含 C++03 `std::string` 的条目 ABI 和另一个用于 C++11 `std::string` ABI 的 ABI，使用 [`expand_cxxstring_abis`](@ref) 函数：
 
 ```jldoctest
 julia> using BinaryBuilder
@@ -262,11 +259,6 @@ dependencies = [
 
 * [`Xorg_libX11`](https://github.com/JuliaPackaging/Yggdrasil/blob/eb3728a2303c98519338fe0be370ef299b807e19/X/Xorg_libX11/build_tarballs.jl#L36-L42) 在构建和运行时依赖于 `Xorg_libxcb_jll` 和 `Xorg_xtrans_jll`，仅在构建时依赖于 `Xorg_xorgproto_jll` 和 `Xorg_util_macros_jll`。
 
-
-!!! note 译注-重新强调
-
-  每个构建器都应该构建一个包：**不要使用多个源将多个包捆绑到一个配方中**。相反，单独构建每个包，并根据需要将它们用作二进制依赖项。这将增加包的可重用性。
-
 ### 特定于平台的依赖项
 
 默认情况下，所有依赖项都用于所有平台，但在某些情况下，包仅在某些平台上需要某些依赖项。您可以通过将 `platforms` 关键字参数传递给依赖构造器来指定需要依赖的平台，这是一个 `AbstractPlatforms` 类型的向量，指定应使用的依赖项。
@@ -280,10 +272,9 @@ Dependency("Package_jll"; platforms=filter(!Sys.iswindows, platforms))
 这些平台依赖信息也被传输到 JLL 包：包装器仅在需要时加载依赖于该平台的 JLL 依赖项。
 
 !!! warning
+    Julia 的包管理器没有可选依赖项或平台相关依赖项的概念：这意味着当在您的环境中安装 JLL 包时，在任何情况下，它的所有依赖项都将被安装。只有在运行必要时才会加载特定于平台的依赖项。
 
-   Julia 的包管理器没有可选依赖项或平台相关依赖项的概念：这意味着当在您的环境中安装 JLL 包时，在任何情况下，它的所有依赖项都将被安装。只有在运行必要时才会加载特定于平台的依赖项。
-
-   出于同样的原因，即使您指定平台不需要的依赖项，如果它也是其他一些依赖项所需的间接依赖项，构建配方仍可能会引入它。目前，`BinaryBuilder.jl` 在安装依赖项的工件时无法传播依赖项依赖于平台的信息。
+    出于同样的原因，即使您指定平台不需要的依赖项，如果它也是其他一些依赖项所需的间接依赖项，构建配方仍可能会引入它。目前，`BinaryBuilder.jl` 在安装依赖项的工件时无法传播依赖项依赖于平台的信息。
 
 例子：
 
@@ -332,7 +323,7 @@ Dependency("Package_jll"; platforms=filter(!Sys.iswindows, platforms))
 本页介绍 `build_tarballs.jl` 脚本，包括：
 
 | 变量名 | 描述 |
-| --- | --- |
+| :-- | :-- |
 | `name` | 编写目标包的名称 |
 | `version` | 编写目标包的版本，可以设置多个，参考 [ImageMagick](https://github.com/JuliaPackaging/Yggdrasil/blob/master/I/ImageMagick/build_tarballs.jl)
 | `sources` | 编写目标包的下载地址 |

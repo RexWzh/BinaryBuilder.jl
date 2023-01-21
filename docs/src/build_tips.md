@@ -5,7 +5,7 @@ BinaryBuilder 提供了一个方便的环境来实现跨平台构建。但是许
 
 如果您的构建因某些错误而失败，请查看 [构建故障排除](@ref) 页面。
 
-*如果您有其他技巧，请带着建议提交 PR。*
+*如果您有其他点子，请提交带建议的 PR。*
 
 ## 根据目标发起不同的 shell 命令
 
@@ -84,24 +84,19 @@ ninja install
 
 如果 `meson.build` 文件存在，向导会自动建议使用 Meson。
 
-
 使用 Meson 执行的构建示例包括：
-
 
 * [gdk-pixbuf](https://github.com/JuliaPackaging/Yggdrasil/blob/8d5a27e24016c0ff2eae379f15dca17e79fd4be4/G/gdk_pixbuf/build_tarballs.jl#L22-L35):
 
   meson 在这里使用依赖于平台的选项；
 
-
 * [libepoxy](https://github.com/JuliaPackaging/Yggdrasil/blob/8d5a27e24016c0ff2eae379f15dca17e79fd4be4/L/Libepoxy/build_tarballs.jl#L19-L25):
 
   该脚本修改 Meson 交叉文件中的 `c_args` 以添加包含目录；
 
-
 * [xkbcommon](https://github.com/JuliaPackaging/Yggdrasil/blob/2f3638292c99fa6032634517f8a1aa8360d6fe8d/X/xkbcommon/build_tarballs.jl#L26-L30).
 
 ## Go 构建
-
 
 可以通过将 `:go` 添加到 [`build_tarballs`](@ref) 的 `compilers` 关键字参数来请求 BinaryBuilder 提供的 Go 工具链：`compilers=[:c, :go]`。基于 Go 的包通常可以使用 `go` 构建和安装：
 
@@ -132,8 +127,7 @@ BinaryBuilder 提供的 Rust 工具链会自动选择合适的目标和要使用
 * [Librsvg](https://github.com/JuliaPackaging/Yggdrasil/blob/ea43d07d264046e8c94a460907bba209a015c10f/L/Librsvg/build_tarballs.jl#L35-L45)：它使用基于 Autoconf 的构建系统，该系统将在内部调用“cargo build” , 但用户必须遵循 `./configure` + `make` + `make install` 顺序。
 
 !!! warning
-
-  当前使用的 Rust 工具链不适用于 `i686-w64-mingw32`（32 位 Windows）平台。
+    当前使用的 Rust 工具链不适用于 `i686-w64-mingw32`（32 位 Windows）平台。
 
 ## 在向导中编辑文件
 
@@ -212,9 +206,8 @@ if [[ "${target}" == *-freebsd* ]] || [[ "${target}" == *-apple-* ]]; then
 fi
 ```
 
-
 ## 目标系统与主机系统的依赖关系
-> 译注：这节与 [构建包](#building) 的 二进制依赖 一节对应。
+> 译注：这节与构建提示的 [二进制依赖](./building#二进制依赖) 一节相关。
 
 BinaryBuilder 提供了一个交叉编译环境，这意味着通常目标平台（构建二进制文件最终将运行的地方）和主机平台（当前正在进行编译的地方）之间存在区别。特别是，在一般的构建环境中，您不能运行为目标平台构建的二进制可执行文件。
 
