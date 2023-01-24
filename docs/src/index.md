@@ -52,8 +52,8 @@ julia build_tarballs.jl --debug --verbose aarch64-linux-musl,arm-linux-musleabih
 
 但是，如果你决定使用此工作流程，则需要手动提交 [Yggdrasil](https://github.com/JuliaPackaging/Yggdrasil/) 的拉取请求。
 
-!!! note
-    （译注）在脚本
+!!! note "译注"
+    在脚本
     
     ```bash
     julia build_tarballs.jl --debug --verbose aarch64-linux-musl,arm-linux-musleabihf

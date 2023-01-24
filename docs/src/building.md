@@ -127,8 +127,8 @@ triplet.(supported_platforms())
 
   这个构建仅针对 Linux 和 FreeBSD 系统，自动从 `supported_platforms` 中筛出，而不明确列出平台。
 
-!!! note
-    译注：注意区分**目标系统与主机系统**，参见 [构建提示](./build_tips.md) 的 [目标系统与主机系统](./build_tips.md#目标系统与主机系统的依赖关系) 。
+!!! note "译注"
+    注意区分**目标系统与主机系统**，参见 [构建提示](./build_tips.md) 的 [目标系统与主机系统](./build_tips.md#目标系统与主机系统的依赖关系) 。
 
 ### 扩展 C++ 字符串 ABI 或 libgfortran 版本
 
@@ -309,25 +309,3 @@ Dependency("Package_jll"; platforms=filter(!Sys.iswindows, platforms))
 ## 在本地构建自定义 JLL 包
 
 在构建新版本的 JLL 包时，如果将 `--deploy` 传递给 `build_tarballs.jl`，则新构建的 JLL 包将部署到 GitHub 存储库。（阅读 [命令行](@ref) 部分中的文档或通过将 `--help` 传递给 `build_tarballs.jl` 脚本来获取有关 `--deploy` 选项的更多信息）。如果传递 `--deploy=local` ，JLL 包仍将构建在 `~/.julia/dev/` 目录中，但不会上传到任何地方。这对于本地测试和验证构建的工件是否与您的包一起工作很有用。
-
-## 总结
-> 以下为翻译补充内容。
-
-构建 JLL 包的基本流程：
-   - 编写 `build_tarballs.jl` 脚本
-   - 本地执行 `julia build_tarballs.jl`，生成 `build` 目录和 `products` 目录
-   - 如果出现错误，执行 `julia build_tarballs.jl --debug --verbose <平台三元组>` 排查错误，针对整体或针对特定平台，修改脚本和二进制依赖，脚本编写规则参考 [构建提示](./build_tips.md)
-   - git 克隆 [Yggdrasil](https://github.com/JuliaPackaging/Yggdrasil) 仓库，将 `build_tarballs.jl` 脚本放入其中并提交 PR
-   - PR 审核通过后，自动向 [JuliaBinaryWrappers](https://github.com/JuliaBinaryWrappers) 发起 JLL 包的 PR，构建后打开对 Julia 注册表 `General` 的合并请求
-
-本页介绍 `build_tarballs.jl` 脚本，包括：
-
-| 变量名 | 描述 |
-| :-- | :-- |
-| `name` | 编写目标包的名称 |
-| `version` | 编写目标包的版本，可以设置多个，参考 [ImageMagick](https://github.com/JuliaPackaging/Yggdrasil/blob/master/I/ImageMagick/build_tarballs.jl)
-| `sources` | 编写目标包的下载地址 |
-| `script` | 编写目标包的构建脚本，编写规则参看 [构建提示](./build_tips.md) |
-| `platforms` | 编写目标包的构建平台 |
-| `products` | 编写目标包的构建结果 |
-| `dependencies` | 编写目标包的依赖包 |
