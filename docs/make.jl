@@ -20,9 +20,11 @@ makedocs(
     # strict = true,
 )
 
-deploydocs(
+deploydocs(;
     repo = "github.com/RexWzh/BinaryBuilder.jl.git",
     # push_preview = true,
-    devurl = "master",
-    versions = ["English" => "master", "stable" => "v^"]
+    devurl = "dev",
+    devbranch = "zh_CN",
+    versions = ["dev" => "dev", "stable" => "v^"],
+    forcepush = true,
 )

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - zh_CN
     tags: '*'
   pull_request:
 
